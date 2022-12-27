@@ -18,6 +18,6 @@ ListElement.propTypes = {
       number: PropTypes.string.isRequired,
     })
   ),
-  handleDeleteContact:PropTypes.func
+  handleDeleteContact: PropTypes.func,
 };
 export default ListElement;

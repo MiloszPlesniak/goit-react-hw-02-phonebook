@@ -5,7 +5,6 @@ const ContactList = ({
   title,
   contacts,
   handleDeleteContact,
-
   changeFilter,
 }) => {
   return (

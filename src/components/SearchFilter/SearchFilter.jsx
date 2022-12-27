@@ -5,7 +5,7 @@ const SearchFilter = ({ changeFilter }) => {
 };
 
 SearchFilter.propTypes = {
-  changeFilter: PropTypes.func
+  changeFilter: PropTypes.func,
 };
 
 export default SearchFilter;
