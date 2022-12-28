@@ -27,8 +27,8 @@ export class App extends Component {
     };
     const info = contact.name + ' is already in contacts';
     this.checkAddContact(INITIAL_STATE.contacts, contact)
-      ? INITIAL_STATE.contacts.push(contact)
-      : Notify.failure(info);
+      ? Notify.failure(info)
+      : INITIAL_STATE.contacts.push(contact);
 
     event.target.reset();
     this.setState(INITIAL_STATE);
@@ -45,14 +45,8 @@ export class App extends Component {
   };
 
   checkAddContact = (contacts, newContact) => {
-    for (const contact of contacts) {
-      console.log(contact.name, newContact.name);
-      if (contact.name === newContact.name) {
-        return false;
-      } else {
-        return true;
-      }
-    }
+    return contacts.find(contact=>contact.name === newContact.name)
+    
   };
 
   changeFilter = e => {
@@ -70,6 +64,8 @@ export class App extends Component {
 
   render() {
     const filtred = this.filteredContacts();
+    console.log("state",this.state.contacts);
+    console.log("iniiial state",INITIAL_STATE.contacts);
     return (
       <div>
         <AddingContacts title="Name" handleAddContact={this.addContact} />
