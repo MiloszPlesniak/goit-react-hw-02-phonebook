@@ -4,18 +4,16 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import ContactList from 'components/ContactList/ContactList';
 import AddingContacts from 'components/AddingContacts/AddingContacts';
 
-let INITIAL_STATE = {
-  contacts: [
-    { id: nanoid(), name: 'Rosie Simpson', number: '459-12-56' },
-    { id: nanoid(), name: 'Hermione Kline', number: '443-89-12' },
-    { id: nanoid(), name: 'Eden Clements', number: '645-17-79' },
-    { id: nanoid(), name: 'Annie Copeland', number: '227-91-26' },
-  ],
-  filter: '',
-};
-
 export class App extends Component {
-  state = INITIAL_STATE;
+  state = {
+    contacts: [
+      { id: nanoid(), name: 'Rosie Simpson', number: '459-12-56' },
+      { id: nanoid(), name: 'Hermione Kline', number: '443-89-12' },
+      { id: nanoid(), name: 'Eden Clements', number: '645-17-79' },
+      { id: nanoid(), name: 'Annie Copeland', number: '227-91-26' },
+    ],
+    filter: '',
+  };
 
   addContact = event => {
     event.preventDefault();
@@ -26,27 +24,24 @@ export class App extends Component {
       number: number.value,
     };
     const info = contact.name + ' is already in contacts';
-    this.checkAddContact(INITIAL_STATE.contacts, contact)
+    this.checkAddContact(this.state.contacts, contact)
       ? Notify.failure(info)
-      : INITIAL_STATE.contacts.push(contact);
+      : this.setState(prevState => ({
+          contacts: [...prevState.contacts, contact],
+        }));
 
     event.target.reset();
-    this.setState(INITIAL_STATE);
   };
 
   deleteContact = event => {
     const value = event.target.parentNode.firstChild.textContent;
-
-    INITIAL_STATE.contacts = INITIAL_STATE.contacts.filter(
-      item => item.name !== value
-    );
-
-    this.setState(INITIAL_STATE);
+    this.setState({
+      contacts: this.state.contacts.filter(item => item.name !== value),
+    });
   };
 
   checkAddContact = (contacts, newContact) => {
-    return contacts.find(contact=>contact.name === newContact.name)
-    
+    return contacts.find(contact => contact.name === newContact.name);
   };
 
   changeFilter = e => {
@@ -64,8 +59,7 @@ export class App extends Component {
 
   render() {
     const filtred = this.filteredContacts();
-    console.log("state",this.state.contacts);
-    console.log("iniiial state",INITIAL_STATE.contacts);
+
     return (
       <div>
         <AddingContacts title="Name" handleAddContact={this.addContact} />
